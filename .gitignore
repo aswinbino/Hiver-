@@ -1,0 +1,6 @@
+node_modules/
+.env
+data/raw/twcs.csv
+data/processed/*.cache
+.DS_Store
+*.log

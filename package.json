@@ -1,0 +1,32 @@
+{
+  "name": "hiver-apple-support-ai-agent",
+  "version": "1.0.0",
+  "description": "Automated Twitter AI Support Agent for @AppleSupport with structured classification, grounded resolution retrieval, escalation guardrails, and full evaluation harness.",
+  "type": "module",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "node src/index.js",
+    "preprocess": "node src/preprocessing.js",
+    "eval": "node eval/evaluate.js",
+    "judge": "node eval/judge.js"
+  },
+  "keywords": [
+    "ai-agent",
+    "apple-support",
+    "llm",
+    "openai",
+    "structured-outputs",
+    "zod",
+    "nlp",
+    "customer-support"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "openai": "^4.86.1",
+    "papaparse": "^5.5.2",
+    "zod": "^3.24.2"
+  }
+}

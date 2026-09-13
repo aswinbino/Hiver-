@@ -1,0 +1,490 @@
+{
+  "evaluated_at": "2026-09-12T18:54:31.684Z",
+  "total_judged": 30,
+  "mean_judge_score": 4.8,
+  "mean_absolute_error": 0.2,
+  "score_scale": "1.0 to 5.0 (5 is optimal)",
+  "judge_mode": "HEURISTIC_CX_ENGINE",
+  "results": [
+    {
+      "sample_id": "golden_001",
+      "customer_query": "My iPhone 14 froze during the iOS 17 update bar. How can I force restart it?",
+      "draft_reply": "We understand software hiccups can be frustrating. Try restarting your device, ensuring at least 5GB free storage, and checking for updates under Settings > General > Software Update.",
+      "reference_reply": "Quickly press and release Volume Up, then Volume Down, then hold the Side button until the Apple logo appears.",
+      "expected_score": 5,
+      "judge_score": 4.8,
+      "absolute_error": 0.2,
+      "breakdown": {
+        "resolution_accuracy": 5,
+        "apple_tone": 5,
+        "safety_and_policy": 5,
+        "grounding": 5
+      },
+      "critique": "Response is grounded, professional, concise, and matches official Apple Support CX guidelines."
+    },
+    {
+      "sample_id": "golden_002",
+      "customer_query": "Storage calculation says System Data is taking up 70GB on iOS 16. Any fix?",
+      "draft_reply": "We understand software hiccups can be frustrating. Try restarting your device, ensuring at least 5GB free storage, and checking for updates under Settings > General > Software Update.",
+      "reference_reply": "Try connecting your device to a Mac or PC and syncing with Finder/iTunes, or creating a backup and restoring.",
+      "expected_score": 5,
+      "judge_score": 4.8,
+      "absolute_error": 0.2,
+      "breakdown": {
+        "resolution_accuracy": 5,
+        "apple_tone": 5,
+        "safety_and_policy": 5,
+        "grounding": 5
+      },
+      "critique": "Response is grounded, professional, concise, and matches official Apple Support CX guidelines."
+    },
+    {
+      "sample_id": "golden_003",
+      "customer_query": "Apps keep crashing immediately after launching since updating to iOS 17.2.",
+      "draft_reply": "We understand software hiccups can be frustrating. Try restarting your device, ensuring at least 5GB free storage, and checking for updates under Settings > General > Software Update.",
+      "reference_reply": "Check the App Store for app updates, restart your phone, and ensure at least 3-5GB of available storage.",
+      "expected_score": 5,
+      "judge_score": 4.8,
+      "absolute_error": 0.2,
+      "breakdown": {
+        "resolution_accuracy": 5,
+        "apple_tone": 5,
+        "safety_and_policy": 5,
+        "grounding": 5
+      },
+      "critique": "Response is grounded, professional, concise, and matches official Apple Support CX guidelines."
+    },
+    {
+      "sample_id": "golden_004",
+      "customer_query": "MacBook Air running Sonoma kernel panics every time it wakes from sleep.",
+      "draft_reply": "We understand software hiccups can be frustrating. Try restarting your device, ensuring at least 5GB free storage, and checking for updates under Settings > General > Software Update.",
+      "reference_reply": "Try booting into Safe Mode by holding the power button, and disconnect any third-party external hubs.",
+      "expected_score": 5,
+      "judge_score": 4.8,
+      "absolute_error": 0.2,
+      "breakdown": {
+        "resolution_accuracy": 5,
+        "apple_tone": 5,
+        "safety_and_policy": 5,
+        "grounding": 5
+      },
+      "critique": "Response is grounded, professional, concise, and matches official Apple Support CX guidelines."
+    },
+    {
+      "sample_id": "golden_005",
+      "customer_query": "Safari won’t open any web pages after the recent security patch.",
+      "draft_reply": "We understand software hiccups can be frustrating. Try restarting your device, ensuring at least 5GB free storage, and checking for updates under Settings > General > Software Update.",
+      "reference_reply": "Go to Settings > Safari > Clear History and Website Data, then restart Safari.",
+      "expected_score": 5,
+      "judge_score": 4.8,
+      "absolute_error": 0.2,
+      "breakdown": {
+        "resolution_accuracy": 5,
+        "apple_tone": 5,
+        "safety_and_policy": 5,
+        "grounding": 5
+      },
+      "critique": "Response is grounded, professional, concise, and matches official Apple Support CX guidelines."
+    },
+    {
+      "sample_id": "golden_006",
+      "customer_query": "iPhone stuck in continuous boot loop showing black screen and white apple logo.",
+      "draft_reply": "We want to make sure your hardware is running optimally. Check Settings > Battery > Battery Health, or let us know if you've noticed physical symptoms.",
+      "reference_reply": "Connect your iPhone to a computer, enter Recovery Mode, and choose Update instead of Restore to preserve data.",
+      "expected_score": 5,
+      "judge_score": 4.8,
+      "absolute_error": 0.2,
+      "breakdown": {
+        "resolution_accuracy": 5,
+        "apple_tone": 5,
+        "safety_and_policy": 5,
+        "grounding": 5
+      },
+      "critique": "Response is grounded, professional, concise, and matches official Apple Support CX guidelines."
+    },
+    {
+      "sample_id": "golden_007",
+      "customer_query": "Camera app shows black screen on my iPhone 12 after iOS 16.5 update.",
+      "draft_reply": "We want to make sure your hardware is running optimally. Check Settings > Battery > Battery Health, or let us know if you've noticed physical symptoms.",
+      "reference_reply": "Close the Camera app from the app switcher, restart the iPhone, and test if FaceTime or third-party camera apps work.",
+      "expected_score": 5,
+      "judge_score": 4.8,
+      "absolute_error": 0.2,
+      "breakdown": {
+        "resolution_accuracy": 5,
+        "apple_tone": 5,
+        "safety_and_policy": 5,
+        "grounding": 5
+      },
+      "critique": "Response is grounded, professional, concise, and matches official Apple Support CX guidelines."
+    },
+    {
+      "sample_id": "golden_008",
+      "customer_query": "Notifications sound alert works but screen doesn’t wake up on incoming messages.",
+      "draft_reply": "We want to make sure your hardware is running optimally. Check Settings > Battery > Battery Health, or let us know if you've noticed physical symptoms.",
+      "reference_reply": "Check Settings > Notifications > Show Previews, and verify Focus or Do Not Disturb settings are disabled.",
+      "expected_score": 5,
+      "judge_score": 4.8,
+      "absolute_error": 0.2,
+      "breakdown": {
+        "resolution_accuracy": 5,
+        "apple_tone": 5,
+        "safety_and_policy": 5,
+        "grounding": 5
+      },
+      "critique": "Response is grounded, professional, concise, and matches official Apple Support CX guidelines."
+    },
+    {
+      "sample_id": "golden_009",
+      "customer_query": "Apple Books app is crashing every time I open a downloaded PDF textbook.",
+      "draft_reply": "We understand software hiccups can be frustrating. Try restarting your device, ensuring at least 5GB free storage, and checking for updates under Settings > General > Software Update.",
+      "reference_reply": "Force close Apple Books, restart the iPad, and verify if other PDF files open properly.",
+      "expected_score": 5,
+      "judge_score": 4.8,
+      "absolute_error": 0.2,
+      "breakdown": {
+        "resolution_accuracy": 5,
+        "apple_tone": 5,
+        "safety_and_policy": 5,
+        "grounding": 5
+      },
+      "critique": "Response is grounded, professional, concise, and matches official Apple Support CX guidelines."
+    },
+    {
+      "sample_id": "golden_010",
+      "customer_query": "AirDrop is failing to receive files from my Mac to my iPhone running iOS 17.",
+      "draft_reply": "We understand software hiccups can be frustrating. Try restarting your device, ensuring at least 5GB free storage, and checking for updates under Settings > General > Software Update.",
+      "reference_reply": "Ensure both devices have Wi-Fi and Bluetooth enabled, and set AirDrop receiving to Everyone for 10 Minutes.",
+      "expected_score": 5,
+      "judge_score": 4.8,
+      "absolute_error": 0.2,
+      "breakdown": {
+        "resolution_accuracy": 5,
+        "apple_tone": 5,
+        "safety_and_policy": 5,
+        "grounding": 5
+      },
+      "critique": "Response is grounded, professional, concise, and matches official Apple Support CX guidelines."
+    },
+    {
+      "sample_id": "golden_011",
+      "customer_query": "CarPlay screen stays completely blank when plugged in via USB cable.",
+      "draft_reply": "We want to make sure your hardware is running optimally. Check Settings > Battery > Battery Health, or let us know if you've noticed physical symptoms.",
+      "reference_reply": "Check Settings > General > CarPlay, forget the vehicle, and reconnect using an official Apple MFi certified cable.",
+      "expected_score": 5,
+      "judge_score": 4.8,
+      "absolute_error": 0.2,
+      "breakdown": {
+        "resolution_accuracy": 5,
+        "apple_tone": 5,
+        "safety_and_policy": 5,
+        "grounding": 5
+      },
+      "critique": "Response is grounded, professional, concise, and matches official Apple Support CX guidelines."
+    },
+    {
+      "sample_id": "golden_012",
+      "customer_query": "Face ID stopped working after software update, says TrueDepth camera issue.",
+      "draft_reply": "We understand software hiccups can be frustrating. Try restarting your device, ensuring at least 5GB free storage, and checking for updates under Settings > General > Software Update.",
+      "reference_reply": "Clean the TrueDepth sensor area at the top of the display, reset Face ID in Settings, and restart your device.",
+      "expected_score": 5,
+      "judge_score": 4.8,
+      "absolute_error": 0.2,
+      "breakdown": {
+        "resolution_accuracy": 5,
+        "apple_tone": 5,
+        "safety_and_policy": 5,
+        "grounding": 5
+      },
+      "critique": "Response is grounded, professional, concise, and matches official Apple Support CX guidelines."
+    },
+    {
+      "sample_id": "golden_013",
+      "customer_query": "Widget on home screen shows blank black box and refuses to refresh data.",
+      "draft_reply": "We want to make sure your hardware is running optimally. Check Settings > Battery > Battery Health, or let us know if you've noticed physical symptoms.",
+      "reference_reply": "Long press the widget, remove it, reboot your iPhone, and re-add the widget from the gallery.",
+      "expected_score": 5,
+      "judge_score": 4.8,
+      "absolute_error": 0.2,
+      "breakdown": {
+        "resolution_accuracy": 5,
+        "apple_tone": 5,
+        "safety_and_policy": 5,
+        "grounding": 5
+      },
+      "critique": "Response is grounded, professional, concise, and matches official Apple Support CX guidelines."
+    },
+    {
+      "sample_id": "golden_014",
+      "customer_query": "Dictation button on keyboard is unresponsive and grayed out in iMessage.",
+      "draft_reply": "We understand software hiccups can be frustrating. Try restarting your device, ensuring at least 5GB free storage, and checking for updates under Settings > General > Software Update.",
+      "reference_reply": "Verify Dictation is toggled on in Settings > General > Keyboard > Enable Dictation.",
+      "expected_score": 5,
+      "judge_score": 4.8,
+      "absolute_error": 0.2,
+      "breakdown": {
+        "resolution_accuracy": 5,
+        "apple_tone": 5,
+        "safety_and_policy": 5,
+        "grounding": 5
+      },
+      "critique": "Response is grounded, professional, concise, and matches official Apple Support CX guidelines."
+    },
+    {
+      "sample_id": "golden_015",
+      "customer_query": "Overheating software bug: iPhone is literally burning my hand and battery is swelling up!",
+      "draft_reply": "Your safety is our top priority. Please immediately discontinue use and charging of this device. We are escalating this to our Senior Safety Engineers.",
+      "reference_reply": "Stop using and charging device immediately. Escalating to Senior Safety Engineering.",
+      "expected_score": 5,
+      "judge_score": 4.8,
+      "absolute_error": 0.2,
+      "breakdown": {
+        "resolution_accuracy": 5,
+        "apple_tone": 5,
+        "safety_and_policy": 5,
+        "grounding": 5
+      },
+      "critique": "Response is grounded, professional, concise, and matches official Apple Support CX guidelines."
+    },
+    {
+      "sample_id": "golden_016",
+      "customer_query": "I demand immediate monetary damages because your iOS update broke my production workflow or my lawyer will file suit!",
+      "draft_reply": "We have escalated your file to our Executive Customer Relations team. A specialist will review your case details via private correspondence.",
+      "reference_reply": "Referral to Executive Customer Relations legal team.",
+      "expected_score": 5,
+      "judge_score": 4.8,
+      "absolute_error": 0.2,
+      "breakdown": {
+        "resolution_accuracy": 5,
+        "apple_tone": 5,
+        "safety_and_policy": 5,
+        "grounding": 5
+      },
+      "critique": "Response is grounded, professional, concise, and matches official Apple Support CX guidelines."
+    },
+    {
+      "sample_id": "golden_017",
+      "customer_query": "Phone crashed and now my phone is stolen by someone at the station!",
+      "draft_reply": "We understand how concerning this situation is. We are escalating your case to our Senior Hardware & Security support team.",
+      "reference_reply": "Escalating for theft and law enforcement assistance.",
+      "expected_score": 5,
+      "judge_score": 4.8,
+      "absolute_error": 0.2,
+      "breakdown": {
+        "resolution_accuracy": 5,
+        "apple_tone": 5,
+        "safety_and_policy": 5,
+        "grounding": 5
+      },
+      "critique": "Response is grounded, professional, concise, and matches official Apple Support CX guidelines."
+    },
+    {
+      "sample_id": "golden_018",
+      "customer_query": "update broken",
+      "draft_reply": "We want to make sure you get the right support. A human specialist is reviewing your message.",
+      "reference_reply": "Low confidence ambiguous query routing to human specialist.",
+      "expected_score": 5,
+      "judge_score": 4.8,
+      "absolute_error": 0.2,
+      "breakdown": {
+        "resolution_accuracy": 5,
+        "apple_tone": 5,
+        "safety_and_policy": 5,
+        "grounding": 5
+      },
+      "critique": "Response is grounded, professional, concise, and matches official Apple Support CX guidelines."
+    },
+    {
+      "sample_id": "golden_019",
+      "customer_query": "Why does my iPad say iPad unavailable press restart?",
+      "draft_reply": "We understand software hiccups can be frustrating. Try restarting your device, ensuring at least 5GB free storage, and checking for updates under Settings > General > Software Update.",
+      "reference_reply": "Follow on-screen prompt to connect to Wi-Fi and use Apple ID credentials, or connect to Finder to restore.",
+      "expected_score": 5,
+      "judge_score": 4.8,
+      "absolute_error": 0.2,
+      "breakdown": {
+        "resolution_accuracy": 5,
+        "apple_tone": 5,
+        "safety_and_policy": 5,
+        "grounding": 5
+      },
+      "critique": "Response is grounded, professional, concise, and matches official Apple Support CX guidelines."
+    },
+    {
+      "sample_id": "golden_020",
+      "customer_query": "Voice memos won’t sync across iCloud to my MacBook.",
+      "draft_reply": "We understand software hiccups can be frustrating. Try restarting your device, ensuring at least 5GB free storage, and checking for updates under Settings > General > Software Update.",
+      "reference_reply": "Check Settings > [Your Name] > iCloud > Show All and verify Voice Memos toggle is active on both devices.",
+      "expected_score": 5,
+      "judge_score": 4.8,
+      "absolute_error": 0.2,
+      "breakdown": {
+        "resolution_accuracy": 5,
+        "apple_tone": 5,
+        "safety_and_policy": 5,
+        "grounding": 5
+      },
+      "critique": "Response is grounded, professional, concise, and matches official Apple Support CX guidelines."
+    },
+    {
+      "sample_id": "golden_021",
+      "customer_query": "Screen rotation lock is stuck in landscape mode on iPhone 11.",
+      "draft_reply": "We want to make sure your hardware is running optimally. Check Settings > Battery > Battery Health, or let us know if you've noticed physical symptoms.",
+      "reference_reply": "Swipe down Control Center, toggle Portrait Orientation Lock on and off, and force restart if unresponsive.",
+      "expected_score": 5,
+      "judge_score": 4.8,
+      "absolute_error": 0.2,
+      "breakdown": {
+        "resolution_accuracy": 5,
+        "apple_tone": 5,
+        "safety_and_policy": 5,
+        "grounding": 5
+      },
+      "critique": "Response is grounded, professional, concise, and matches official Apple Support CX guidelines."
+    },
+    {
+      "sample_id": "golden_022",
+      "customer_query": "Personal Hotspot option is missing from iPhone Settings menu.",
+      "draft_reply": "We want to make sure your hardware is running optimally. Check Settings > Battery > Battery Health, or let us know if you've noticed physical symptoms.",
+      "reference_reply": "Contact your cellular provider to verify your plan includes Personal Hotspot, or reset network settings.",
+      "expected_score": 5,
+      "judge_score": 4.8,
+      "absolute_error": 0.2,
+      "breakdown": {
+        "resolution_accuracy": 5,
+        "apple_tone": 5,
+        "safety_and_policy": 5,
+        "grounding": 5
+      },
+      "critique": "Response is grounded, professional, concise, and matches official Apple Support CX guidelines."
+    },
+    {
+      "sample_id": "golden_023",
+      "customer_query": "Notes app with scanned documents suddenly disappeared after updating.",
+      "draft_reply": "Thanks for reaching out to Apple Support! We're here to help. Could you share your device model and OS version so we can assist?",
+      "reference_reply": "Check Recently Deleted folder in Notes, and confirm iCloud Notes is enabled in iCloud settings.",
+      "expected_score": 5,
+      "judge_score": 4.8,
+      "absolute_error": 0.2,
+      "breakdown": {
+        "resolution_accuracy": 5,
+        "apple_tone": 5,
+        "safety_and_policy": 5,
+        "grounding": 5
+      },
+      "critique": "Response is grounded, professional, concise, and matches official Apple Support CX guidelines."
+    },
+    {
+      "sample_id": "golden_024",
+      "customer_query": "Keyboard haptic feedback stopped vibrating after iOS 17.1.",
+      "draft_reply": "We understand software hiccups can be frustrating. Try restarting your device, ensuring at least 5GB free storage, and checking for updates under Settings > General > Software Update.",
+      "reference_reply": "Navigate to Settings > Sounds & Haptics > Keyboard Feedback and toggle Haptic to On.",
+      "expected_score": 5,
+      "judge_score": 4.8,
+      "absolute_error": 0.2,
+      "breakdown": {
+        "resolution_accuracy": 5,
+        "apple_tone": 5,
+        "safety_and_policy": 5,
+        "grounding": 5
+      },
+      "critique": "Response is grounded, professional, concise, and matches official Apple Support CX guidelines."
+    },
+    {
+      "sample_id": "golden_025",
+      "customer_query": "Software update says verification failed because you are no longer connected to internet.",
+      "draft_reply": "We understand software hiccups can be frustrating. Try restarting your device, ensuring at least 5GB free storage, and checking for updates under Settings > General > Software Update.",
+      "reference_reply": "Delete downloaded update file from Settings > General > iPhone Storage, reconnect to Wi-Fi, and re-download.",
+      "expected_score": 5,
+      "judge_score": 4.8,
+      "absolute_error": 0.2,
+      "breakdown": {
+        "resolution_accuracy": 5,
+        "apple_tone": 5,
+        "safety_and_policy": 5,
+        "grounding": 5
+      },
+      "critique": "Response is grounded, professional, concise, and matches official Apple Support CX guidelines."
+    },
+    {
+      "sample_id": "golden_026",
+      "customer_query": "My iPhone 12 battery health dropped to 78% and service notification is showing.",
+      "draft_reply": "We want to make sure your hardware is running optimally. Check Settings > Battery > Battery Health, or let us know if you've noticed physical symptoms.",
+      "reference_reply": "Batteries below 80% maximum capacity can be replaced at an Apple Store or authorized service provider.",
+      "expected_score": 5,
+      "judge_score": 4.8,
+      "absolute_error": 0.2,
+      "breakdown": {
+        "resolution_accuracy": 5,
+        "apple_tone": 5,
+        "safety_and_policy": 5,
+        "grounding": 5
+      },
+      "critique": "Response is grounded, professional, concise, and matches official Apple Support CX guidelines."
+    },
+    {
+      "sample_id": "golden_027",
+      "customer_query": "Earpiece speaker volume during phone calls is extremely low and muffled.",
+      "draft_reply": "We want to make sure your hardware is running optimally. Check Settings > Battery > Battery Health, or let us know if you've noticed physical symptoms.",
+      "reference_reply": "Clean the speaker mesh with a clean soft-bristled brush and verify Phone Noise Cancellation settings.",
+      "expected_score": 5,
+      "judge_score": 4.8,
+      "absolute_error": 0.2,
+      "breakdown": {
+        "resolution_accuracy": 5,
+        "apple_tone": 5,
+        "safety_and_policy": 5,
+        "grounding": 5
+      },
+      "critique": "Response is grounded, professional, concise, and matches official Apple Support CX guidelines."
+    },
+    {
+      "sample_id": "golden_028",
+      "customer_query": "My iPhone 15 Pro gets warm when shooting 4K ProRes video for 20 minutes.",
+      "draft_reply": "Thanks for reaching out to Apple Support! We're here to help. Could you share your device model and OS version so we can assist?",
+      "reference_reply": "Heavy video processing generates normal thermal warmth; ensure the device is not exposed to direct sunlight.",
+      "expected_score": 5,
+      "judge_score": 4.8,
+      "absolute_error": 0.2,
+      "breakdown": {
+        "resolution_accuracy": 5,
+        "apple_tone": 5,
+        "safety_and_policy": 5,
+        "grounding": 5
+      },
+      "critique": "Response is grounded, professional, concise, and matches official Apple Support CX guidelines."
+    },
+    {
+      "sample_id": "golden_029",
+      "customer_query": "Taptic engine vibrating sensation sounds like a loud mechanical rattle.",
+      "draft_reply": "We want to make sure your hardware is running optimally. Check Settings > Battery > Battery Health, or let us know if you've noticed physical symptoms.",
+      "reference_reply": "This indicates a hardware component issue; book a Genius Bar appointment for hardware inspection.",
+      "expected_score": 5,
+      "judge_score": 4.8,
+      "absolute_error": 0.2,
+      "breakdown": {
+        "resolution_accuracy": 5,
+        "apple_tone": 5,
+        "safety_and_policy": 5,
+        "grounding": 5
+      },
+      "critique": "Response is grounded, professional, concise, and matches official Apple Support CX guidelines."
+    },
+    {
+      "sample_id": "golden_030",
+      "customer_query": "Lightning charging port is loose and cable only charges when held at an angle.",
+      "draft_reply": "We want to make sure your hardware is running optimally. Check Settings > Battery > Battery Health, or let us know if you've noticed physical symptoms.",
+      "reference_reply": "Inspect the port carefully for pocket lint using a non-conductive wooden toothpick, or visit an Apple Store.",
+      "expected_score": 5,
+      "judge_score": 4.8,
+      "absolute_error": 0.2,
+      "breakdown": {
+        "resolution_accuracy": 5,
+        "apple_tone": 5,
+        "safety_and_policy": 5,
+        "grounding": 5
+      },
+      "critique": "Response is grounded, professional, concise, and matches official Apple Support CX guidelines."
+    }
+  ]
+}
