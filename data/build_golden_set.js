@@ -16,16 +16,10 @@ const INTENTS = [
   'General Inquiry & How-To'
 ];
 
-/**
- * Generates 150 diverse, high-quality golden test entries
- * covering standard resolutions, safety hazards, auth requirements,
- * legal threats, ambiguous inputs, and hardware edge cases.
- */
 function generateGoldenSet() {
   const dataset = [];
 
   const templates = [
-    // 1. Software & Update Issues (Auto-handle and escalations)
     {
       intent: 'Software & Update Issues',
       queries: [
@@ -56,8 +50,6 @@ function generateGoldenSet() {
         { q: 'Software update says verification failed because you are no longer connected to internet.', d: 'AUTO_HANDLE', e: 'NONE', r: 'Delete downloaded update file from Settings > General > iPhone Storage, reconnect to Wi-Fi, and re-download.' }
       ]
     },
-
-    // 2. Hardware & Battery Malfunction
     {
       intent: 'Hardware & Battery Malfunction',
       queries: [
@@ -88,8 +80,6 @@ function generateGoldenSet() {
         { q: 'Fast charging isn’t working with my USB-C to Lightning cable.', d: 'AUTO_HANDLE', e: 'NONE', r: 'Ensure your power adapter supports USB Power Delivery (PD) and outputs 18W or higher.' }
       ]
     },
-
-    // 3. Account, Apple ID & Security
     {
       intent: 'Account, Apple ID & Security',
       queries: [
@@ -120,8 +110,6 @@ function generateGoldenSet() {
         { q: 'Where do I find my Apple ID recovery key that I generated last year?', d: 'AUTO_HANDLE', e: 'NONE', r: 'Apple does not store your recovery key; if lost, you can generate a new one while signed in to a trusted device.' }
       ]
     },
-
-    // 4. App Store & In-App Purchases
     {
       intent: 'App Store & In-App Purchases',
       queries: [
@@ -152,8 +140,6 @@ function generateGoldenSet() {
         { q: 'How to pre-order an upcoming book in Apple Books?', d: 'AUTO_HANDLE', e: 'NONE', r: 'Find the title in Apple Books, tap Pre-Order, and the book will automatically download on release day.' }
       ]
     },
-
-    // 5. Connectivity (Wi-Fi, Cellular, Bluetooth)
     {
       intent: 'Connectivity (Wi-Fi, Cellular, Bluetooth)',
       queries: [
@@ -184,8 +170,6 @@ function generateGoldenSet() {
         { q: 'Why does Private Wi-Fi Address cause login issues on hotel captive portals?', d: 'AUTO_HANDLE', e: 'NONE', r: 'Some hotel portals require static MAC addresses; temporarily toggle Private Wi-Fi Address off for that network.' }
       ]
     },
-
-    // 6. General Inquiry & How-To
     {
       intent: 'General Inquiry & How-To',
       queries: [

@@ -12,9 +12,6 @@ const PROJECT_ROOT = path.resolve(__dirname, '..');
 const GOLDEN_SET_PATH = path.join(PROJECT_ROOT, 'data', 'golden_set.json');
 const RESULTS_OUTPUT_PATH = path.join(PROJECT_ROOT, 'eval', 'eval_results.json');
 
-/**
- * Calculates classification metrics (Precision, Recall, F1, Macro F1)
- */
 export function calculateIntentMetrics(confusionMatrix, categories) {
   const metricsPerClass = {};
   let sumF1 = 0;
@@ -58,14 +55,11 @@ export function calculateIntentMetrics(confusionMatrix, categories) {
   };
 }
 
-/**
- * Calculates Binary Escalation Metrics (Precision, Recall, F1)
- */
 export function calculateEscalationMetrics(predictions) {
-  let tp = 0; // True decision ESCALATE, Predicted ESCALATE
-  let fp = 0; // True decision AUTO_HANDLE, Predicted ESCALATE
-  let fn = 0; // True decision ESCALATE, Predicted AUTO_HANDLE
-  let tn = 0; // True decision AUTO_HANDLE, Predicted AUTO_HANDLE
+  let tp = 0;
+  let fp = 0;
+  let fn = 0;
+  let tn = 0;
 
   for (const p of predictions) {
     const actual = p.true_decision;
@@ -94,9 +88,6 @@ export function calculateEscalationMetrics(predictions) {
   };
 }
 
-/**
- * Main Evaluation Harness Runner
- */
 export async function runEvaluationHarness(options = {}) {
   console.log('================================================================================');
   console.log('       Apple Support AI Agent - Automated Evaluation Benchmark Harness');
@@ -112,7 +103,6 @@ export async function runEvaluationHarness(options = {}) {
 
   console.log(`[Eval] Loaded ${goldenData.length} golden items. Evaluating ${testSamples.length} samples...`);
 
-  // Initialize confusion matrix
   const confusionMatrix = {};
   for (const c1 of INTENT_CATEGORIES) {
     confusionMatrix[c1] = {};
@@ -162,11 +152,9 @@ export async function runEvaluationHarness(options = {}) {
 
   const totalTimeSec = ((Date.now() - startTime) / 1000).toFixed(2);
 
-  // Compute Metrics
   const intentMetrics = calculateIntentMetrics(confusionMatrix, INTENT_CATEGORIES);
   const escalationMetrics = calculateEscalationMetrics(predictions);
 
-  // Latency Metrics
   latencies.sort((a, b) => a - b);
   const avgLatency = Math.round(latencies.reduce((a, b) => a + b, 0) / latencies.length);
   const p50Latency = latencies[Math.floor(latencies.length * 0.5)];
@@ -204,7 +192,6 @@ export async function runEvaluationHarness(options = {}) {
 
   fs.writeFileSync(RESULTS_OUTPUT_PATH, JSON.stringify(summaryReport, null, 2), 'utf8');
 
-  // Print Executive Results Dashboard
   console.log('\n================================================================================');
   console.log('                          BENCHMARK HEADLINE RESULTS');
   console.log('================================================================================');
@@ -228,7 +215,6 @@ export async function runEvaluationHarness(options = {}) {
   return summaryReport;
 }
 
-// CLI Direct Invocation
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
   const isMock = process.argv.includes('--mock');
   const limitArg = process.argv.find((a) => a.startsWith('--limit='));

@@ -24,9 +24,6 @@ const JudgeScoreSchema = z.object({
   critique: z.string().describe('Detailed evaluation critique explaining the assigned rating')
 });
 
-/**
- * Heuristic CX rubric evaluator
- */
 function heuristicJudgeDraft(query, draftReply, groundTruthReply, decision) {
   let score = 4.8;
   let accuracy = 5;
@@ -38,21 +35,18 @@ function heuristicJudgeDraft(query, draftReply, groundTruthReply, decision) {
   const replyLower = draftReply.toLowerCase();
   const queryLower = query.toLowerCase();
 
-  // Safety compliance check
   if ((queryLower.includes('swelling') || queryLower.includes('fire') || queryLower.includes('smoke')) && !replyLower.includes('safety') && !replyLower.includes('discontinue')) {
     safety = 2;
     score -= 2.5;
     critiquePoints.push('Failed to prioritize immediate physical safety.');
   }
 
-  // Length check (Apple tweets are concise)
   if (draftReply.length > 350) {
     tone -= 1;
     score -= 0.5;
     critiquePoints.push('Response is slightly verbose for Twitter character constraints.');
   }
 
-  // Privacy compliance
   if (replyLower.includes('password') && replyLower.includes('send us your password')) {
     safety = 1;
     score = 1;
@@ -73,9 +67,6 @@ function heuristicJudgeDraft(query, draftReply, groundTruthReply, decision) {
   };
 }
 
-/**
- * Main LLM Judge Execution Harness
- */
 export async function runJudgeEvaluation(options = {}) {
   console.log('================================================================================');
   console.log('            LLM-as-a-Judge Evaluation & Quality Rubric Harness');

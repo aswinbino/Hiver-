@@ -15,35 +15,26 @@ const LOCAL_RAW_PATH = path.join(PROJECT_ROOT, 'data', 'raw', 'twcs.csv');
 const PROCESSED_DATA_DIR = path.join(PROJECT_ROOT, 'data', 'processed');
 const OUTPUT_FILE_PATH = path.join(PROCESSED_DATA_DIR, 'apple_pairs.json');
 
-/**
- * High-performance PII Sanitizer & Text Normalizer
- * Masks emails, phone numbers, serial numbers, case numbers, and credit cards.
- * Strips @handles and collapses whitespace.
- */
 export function sanitizeAndMaskPII(text) {
   if (!text || typeof text !== 'string') return '';
 
   let sanitized = text;
 
-  // 1. Mask Email Addresses
   sanitized = sanitized.replace(
     /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/gi,
     '[EMAIL]'
   );
 
-  // 2. Mask Phone Numbers (International & US formats, 10+ digits)
   sanitized = sanitized.replace(
     /(?:\+?\d{1,3}[-.\s]?)?\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}\b/g,
     '[PHONE]'
   );
 
-  // 3. Mask Credit Card / Account Numbers (13 to 19 digits with spaces/hyphens)
   sanitized = sanitized.replace(
     /\b(?:\d{4}[-\s]?){3}\d{4}\b|\b\d{15,16}\b/g,
     '[PAYMENT_CARD]'
   );
 
-  // 4. Mask Case, Repair, or Order IDs (e.g. CAS-1234567, 1009283741, W12938472)
   sanitized = sanitized.replace(
     /\b(?:CAS|CASE|REF|ORD|REP)[-_#]?\d{5,12}\b/gi,
     '[CASE_ID]'
@@ -53,7 +44,6 @@ export function sanitizeAndMaskPII(text) {
     '[ORDER_NUMBER]'
   );
 
-  // 5. Mask Apple Serial / IMEI (12-char alphanumeric serial or 15-digit IMEI)
   sanitized = sanitized.replace(
     /\b\d{15}\b/g,
     '[IMEI]'
@@ -63,16 +53,13 @@ export function sanitizeAndMaskPII(text) {
     '[SERIAL_NUMBER]'
   );
 
-  // 6. Strip @user handles (e.g. @AppleSupport, @115858, @john_doe)
   sanitized = sanitized.replace(/@([A-Za-z0-9_]+)/g, '');
 
-  // 7. Strip raw URLs while preserving semantic domain indicators
   sanitized = sanitized.replace(
     /https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_+.~#?&//=]*)/gi,
     '[LINK]'
   );
 
-  // 8. Normalize HTML entities and whitespace
   sanitized = sanitized
     .replace(/&amp;/g, '&')
     .replace(/&lt;/g, '<')
@@ -85,12 +72,6 @@ export function sanitizeAndMaskPII(text) {
   return sanitized;
 }
 
-/**
- * Determines the best source CSV path:
- * 1. Explicit argument / option
- * 2. C:\Users\aswin\Downloads\twcs.csv
- * 3. data/raw/twcs.csv
- */
 function resolveCsvSource(customPath) {
   if (customPath && fs.existsSync(customPath)) return customPath;
   if (fs.existsSync(DEFAULT_DOWNLOAD_PATH)) return DEFAULT_DOWNLOAD_PATH;
@@ -98,10 +79,6 @@ function resolveCsvSource(customPath) {
   return LOCAL_RAW_PATH;
 }
 
-/**
- * Asynchronously parse twcs.csv and reconstruct customer-agent threads.
- * Uses high-performance streaming with memory filtering strictly for @AppleSupport.
- */
 export async function preprocessTwcsData(options = {}) {
   const inputArg = process.argv[2];
   const rawPath = resolveCsvSource(options.rawPath || inputArg);
@@ -116,10 +93,7 @@ export async function preprocessTwcsData(options = {}) {
     fs.mkdirSync(PROCESSED_DATA_DIR, { recursive: true });
   }
 
-  // Fast hash maps for O(1) thread linking
-  // customerTweetMap: customer tweet_id -> { tweet_id, text, created_at }
   const customerTweetMap = new Map();
-  // agentReplies: Array of { tweet_id, in_response_to_tweet_id, text, created_at }
   const agentReplies = [];
 
   const fileStream = fs.createReadStream(rawPath, { encoding: 'utf8' });
@@ -131,7 +105,7 @@ export async function preprocessTwcsData(options = {}) {
     Papa.parse(fileStream, {
       header: true,
       skipEmptyLines: true,
-      chunkSize: 1024 * 1024 * 8, // 8MB chunks for fast I/O throughput
+      chunkSize: 1024 * 1024 * 8,
       chunk: (results, parser) => {
         for (const row of results.data) {
           rowCount++;
@@ -143,7 +117,6 @@ export async function preprocessTwcsData(options = {}) {
           const isAppleAuthor = author.toLowerCase() === 'applesupport';
           const mentionsApple = text.includes('@AppleSupport') || text.includes('AppleSupport');
 
-          // Memory optimization: Discard tweets unrelated to Apple immediately
           if (!isAppleAuthor && !mentionsApple) {
             continue;
           }
@@ -153,7 +126,6 @@ export async function preprocessTwcsData(options = {}) {
           const tweetId = String(row.tweet_id).trim();
 
           if (isAppleAuthor && !isInbound) {
-            // Outbound agent reply from AppleSupport
             if (row.in_response_to_tweet_id) {
               agentReplies.push({
                 tweet_id: tweetId,
@@ -164,7 +136,6 @@ export async function preprocessTwcsData(options = {}) {
               });
             }
           } else if (isInbound || mentionsApple) {
-            // Inbound customer tweet directed to Apple
             customerTweetMap.set(tweetId, {
               tweet_id: tweetId,
               created_at: row.created_at || '',
@@ -172,7 +143,6 @@ export async function preprocessTwcsData(options = {}) {
             });
           }
 
-          // If we have accumulated enough agent replies to fulfill maxPairs, we can stop early
           if (agentReplies.length >= maxPairs * 2) {
             parser.abort();
             break;
@@ -199,7 +169,6 @@ export async function preprocessTwcsData(options = {}) {
             const cleanCustomer = sanitizeAndMaskPII(customerTweet.text);
             const cleanAgent = sanitizeAndMaskPII(agentTweet.text);
 
-            // Filter out trivial one-word or empty interactions
             if (cleanCustomer.length > 15 && cleanAgent.length > 15 && !seenCustomerQueries.has(cleanCustomer)) {
               seenCustomerQueries.add(cleanCustomer);
               pairedData.push({
@@ -231,7 +200,6 @@ export async function preprocessTwcsData(options = {}) {
   });
 }
 
-// Direct CLI invocation
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
   preprocessTwcsData()
     .then((pairs) => {

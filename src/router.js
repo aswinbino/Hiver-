@@ -14,10 +14,8 @@ const __dirname = path.dirname(__filename);
 const PROJECT_ROOT = path.resolve(__dirname, '..');
 const PROCESSED_PAIRS_PATH = path.join(PROJECT_ROOT, 'data', 'processed', 'apple_pairs.json');
 
-// Circuit-breaker state for quota exhaustion or network downtime
 let apiQuotaExhausted = false;
 
-// The 6 Canonical Support Intents
 export const INTENT_CATEGORIES = [
   'Software & Update Issues',
   'Hardware & Battery Malfunction',
@@ -29,9 +27,6 @@ export const INTENT_CATEGORIES = [
 
 export const DECISION_ENUM = ['AUTO_HANDLE', 'ESCALATE'];
 
-/**
- * Strict Zod Output Schema required for Structured Outputs with OpenAI
- */
 export const SupportActionSchema = z.object({
   intent: z.enum([
     'Software & Update Issues',
@@ -47,9 +42,6 @@ export const SupportActionSchema = z.object({
   escalation_reason: z.string().describe('Specific justification for escalation, or "N/A" if AUTO_HANDLE')
 });
 
-/**
- * Cache for historical interaction pairs to ground responses
- */
 let historicalPairsCache = null;
 
 function loadHistoricalPairs() {
@@ -68,9 +60,6 @@ function loadHistoricalPairs() {
   return historicalPairsCache;
 }
 
-/**
- * High-speed token overlap retrieval for historical grounding
- */
 export function retrieveRelevantHistoricalContext(query, topK = 3) {
   const pairs = loadHistoricalPairs();
   if (!pairs || pairs.length === 0) return [];
@@ -99,14 +88,9 @@ export function retrieveRelevantHistoricalContext(query, topK = 3) {
   return scored.slice(0, topK).filter((s) => s.score > 0.05).map((s) => s.pair);
 }
 
-/**
- * Deterministic Safety & Policy Escalation Checker (Guardrail layer)
- * Defense-in-depth against LLM hallucination and policy violation.
- */
 export function evaluateDeterministicEscalationRules(query, modelResult) {
   const qLower = query.toLowerCase();
 
-  // 1. Hardware safety hazards
   const safetyKeywords = [
     'swelling', 'swollen', 'bulging', 'bulge', 'smoke', 'smoking', 'fire', 'caught fire',
     'spark', 'sparking', 'sparks', 'explosion', 'exploding', 'exploded',
@@ -121,7 +105,6 @@ export function evaluateDeterministicEscalationRules(query, modelResult) {
     }
   }
 
-  // 2. Physical damage / stolen device
   const physicalOrTheftKeywords = [
     'stolen', 'theft', 'robbed', 'shattered screen', 'screen broke into pieces',
     'run over', 'deep ocean', 'dropped in pool', 'submerged in ocean'
@@ -135,7 +118,6 @@ export function evaluateDeterministicEscalationRules(query, modelResult) {
     }
   }
 
-  // 3. Private authentication & secure transactions
   const authPatterns = [
     /password/i,
     /forgot.*password/i,
@@ -166,7 +148,6 @@ export function evaluateDeterministicEscalationRules(query, modelResult) {
     }
   }
 
-  // 4. Legal action or severe churn
   const legalKeywords = [
     'lawsuit', 'sue you', 'sue apple', 'attorney', 'lawyer', 'legal action',
     'better business bureau', 'bbb complaint', 'consumer protection', 'class action',
@@ -181,7 +162,6 @@ export function evaluateDeterministicEscalationRules(query, modelResult) {
     }
   }
 
-  // 5. Low confidence threshold (< 0.75)
   if (modelResult && typeof modelResult.intent_confidence === 'number' && modelResult.intent_confidence < 0.75) {
     return {
       mustEscalate: true,
@@ -192,10 +172,36 @@ export function evaluateDeterministicEscalationRules(query, modelResult) {
   return { mustEscalate: false, reason: 'N/A' };
 }
 
-/**
- * Intelligent semantic simulation engine
- * Used when offline, during automated unit testing, or if API quota is exceeded.
- */
+export function validateAndSanitizeURLs(draftReply) {
+  if (!draftReply || typeof draftReply !== 'string') return draftReply;
+
+  const urlRegex = /(https?:\/\/[^\s]+)/g;
+  const matches = draftReply.match(urlRegex);
+
+  if (!matches) return draftReply;
+
+  const allowedDomains = [
+    'https://support.apple.com',
+    'https://iforgot.apple.com',
+    'https://reportaproblem.apple.com',
+    'https://appleid.apple.com'
+  ];
+
+  let sanitizedReply = draftReply;
+
+  for (const url of matches) {
+    const cleanUrl = url.replace(/[.,!?]$/, '');
+    const isApproved = allowedDomains.some(domain => cleanUrl.startsWith(domain));
+
+    if (!isApproved) {
+      console.warn(`[Guardrail] Blocked hallucinated/unapproved URL: "${cleanUrl}"`);
+      sanitizedReply = sanitizedReply.replace(cleanUrl, 'https://support.apple.com');
+    }
+  }
+
+  return sanitizedReply;
+}
+
 function mockSimulateAgentResponse(cleanQuery) {
   const q = cleanQuery.toLowerCase();
 
@@ -205,7 +211,6 @@ function mockSimulateAgentResponse(cleanQuery) {
   let decision = 'AUTO_HANDLE';
   let escalationReason = 'N/A';
 
-  // Intent Classification heuristics
   if (q.includes('battery') || q.includes('speaker') || q.includes('microphone') || q.includes('taptic') || q.includes('charging port') || q.includes('magsafe') || q.includes('swelling') || q.includes('bulging') || q.includes('hot') || q.includes('hardware') || q.includes('earpiece') || q.includes('screen') || q.includes('shattered') || q.includes('lens') || q.includes('shock')) {
     intent = 'Hardware & Battery Malfunction';
     confidence = 0.92;
@@ -228,16 +233,14 @@ function mockSimulateAgentResponse(cleanQuery) {
     draftReply = "Let's get your connection working. Try toggling Airplane Mode on for 10 seconds, then off. You can also reset network settings in Settings > General > Transfer or Reset iPhone > Reset > Reset Network Settings.";
   }
 
-  // Ambiguity / Low Confidence checks
   const words = cleanQuery.trim().split(/\s+/).filter(Boolean);
   const isGenericGreeting = words.length <= 2 && (q.includes('hi') || q.includes('hello') || q.includes('help'));
   const hasSpecificAppleKeyword = q.includes('iphone') || q.includes('ipad') || q.includes('mac') || q.includes('watch') || q.includes('apple') || q.includes('ios') || q.includes('icloud') || q.includes('airpods');
 
   if ((words.length <= 3 && !isGenericGreeting) || (words.length <= 5 && !hasSpecificAppleKeyword && (q.includes('did the thing') || q.includes('broken') || q.includes('not working')))) {
-    confidence = 0.58; // Below 0.75 threshold
+    confidence = 0.58;
   }
 
-  // Guardrail check
   const guard = evaluateDeterministicEscalationRules(cleanQuery, { intent_confidence: confidence });
   if (guard.mustEscalate) {
     decision = 'ESCALATE';
@@ -258,15 +261,12 @@ function mockSimulateAgentResponse(cleanQuery) {
   return {
     intent,
     intent_confidence: confidence,
-    draft_reply: draftReply,
+    draft_reply: validateAndSanitizeURLs(draftReply),
     decision,
     escalation_reason: escalationReason
   };
 }
 
-/**
- * Main Agent Processing Function
- */
 export async function processCustomerMessage(rawCustomerTweet, options = {}) {
   const startTime = Date.now();
   const cleanQuery = sanitizeAndMaskPII(rawCustomerTweet);
@@ -277,7 +277,7 @@ export async function processCustomerMessage(rawCustomerTweet, options = {}) {
       sanitized_query: '',
       intent: 'General Inquiry & How-To',
       intent_confidence: 0.0,
-      draft_reply: "Hello! We're here to help. Please let us know what Apple product or service you need assistance with.",
+      draft_reply: validateAndSanitizeURLs("Hello! We're here to help. Please let us know what Apple product or service you need assistance with."),
       decision: 'ESCALATE',
       escalation_reason: 'Empty or invalid message content.',
       latency_ms: Date.now() - startTime
@@ -287,19 +287,18 @@ export async function processCustomerMessage(rawCustomerTweet, options = {}) {
   const apiKey = process.env.OPENAI_API_KEY;
   const modelName = process.env.OPENAI_MODEL || 'gpt-4o-mini';
 
-  // Retrieve relevant historical context
   const retrievedPairs = retrieveRelevantHistoricalContext(cleanQuery, 3);
   const contextSnippet = retrievedPairs.length > 0
     ? retrievedPairs.map((p, idx) => `[Historical Example ${idx + 1}]\nCustomer: ${p.customer_query}\nAgent Resolution: ${p.historical_reply}`).join('\n\n')
     : 'No directly matching historical thread found. Rely on standard Apple Support procedures.';
 
-  // If mock is explicitly requested, or key is absent, or circuit breaker tripped
   if (options.mockOnly || !apiKey || apiKey === 'your_openai_api_key_here' || apiQuotaExhausted) {
     const mockOutput = mockSimulateAgentResponse(cleanQuery);
     return {
       raw_query: rawCustomerTweet,
       sanitized_query: cleanQuery,
       ...mockOutput,
+      draft_reply: validateAndSanitizeURLs(mockOutput.draft_reply),
       is_mock: true,
       latency_ms: Date.now() - startTime
     };
@@ -349,7 +348,6 @@ ${contextSnippet}`;
 
     const parsed = response.choices[0].message.parsed;
 
-    // Defense-in-depth: Run code-level deterministic guardrail checks
     const guard = evaluateDeterministicEscalationRules(cleanQuery, parsed);
     let finalDecision = parsed.decision;
     let finalReason = parsed.escalation_reason;
@@ -364,14 +362,13 @@ ${contextSnippet}`;
       sanitized_query: cleanQuery,
       intent: parsed.intent,
       intent_confidence: parsed.intent_confidence,
-      draft_reply: parsed.draft_reply,
+      draft_reply: validateAndSanitizeURLs(parsed.draft_reply),
       decision: finalDecision,
       escalation_reason: finalReason,
       is_mock: false,
       latency_ms: Date.now() - startTime
     };
   } catch (error) {
-    // Detect quota exhaustion and trip circuit-breaker so we don't delay subsequent tests
     if (error.status === 429 || (error.message && (error.message.includes('429') || error.message.includes('credits')))) {
       if (!apiQuotaExhausted) {
         console.warn('\n[Router] Notice: OpenAI API quota exhausted (429). Tripping circuit breaker to local fallback engine.');
@@ -386,6 +383,7 @@ ${contextSnippet}`;
       raw_query: rawCustomerTweet,
       sanitized_query: cleanQuery,
       ...fallback,
+      draft_reply: validateAndSanitizeURLs(fallback.draft_reply),
       error_fallback: true,
       error_details: error.message,
       latency_ms: Date.now() - startTime
